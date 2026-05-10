@@ -1,15 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.scss';
 import Carousel from './components/Carousel';
 
-interface State {
-  images: string[];
-}
 
-class App extends React.Component<{}, State> {
-  state = {
-    images: [
-      './img/1.png',
+const images = [
+        './img/1.png',
       './img/2.png',
       './img/3.png',
       './img/4.png',
@@ -19,21 +14,52 @@ class App extends React.Component<{}, State> {
       './img/8.png',
       './img/9.png',
       './img/10.png',
-    ],
-  };
+];
 
-  render() {
-    const { images } = this.state;
+export const App: React.FC = () => {
+  const [itemWidth, setItemWidth] = useState(130);
+  const [frameSize, setFrameSize] = useState(3);
+  const [step, setStep] = useState(3);
+  const [animationDuration, setAnimationDuration] = useState(1000);
 
     return (
       <div className="App">
+        <input
+        value={itemWidth}
+        onChange={(e) =>
+          setItemWidth(Number(e.target.value))
+        }
+        />
+        <input
+        value={frameSize}
+        onChange={(e) =>
+          setFrameSize(Number(e.target.value))
+        }
+        />
+        <input
+        value={step}
+        onChange={(e) =>
+          setStep(Number(e.target.value))
+        }
+        />
+        <input
+        value={animationDuration}
+        onChange={(e) =>
+          setAnimationDuration(Number(e.target.value))
+        }
+        />
+         <Carousel
+          images = {images}
+          step = {step}
+          frameSize = {frameSize}
+          itemWidth = {itemWidth}
+          animationDuration = {animationDuration}
+          infinite = {false}
+        />
         {/* eslint-disable-next-line */}
-        <h1>Carousel with {images.length} images</h1>
-
-        <Carousel />
+        <h1 data-cy='title'>Carousel with {images.length} images</h1>
       </div>
     );
   }
-}
 
 export default App;
